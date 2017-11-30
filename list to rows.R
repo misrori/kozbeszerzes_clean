@@ -2,10 +2,18 @@ library(data.table)
 
 # get_adat
 #####
-adat <- data.table(fread("eredmyn_to_clean.csv", stringsAsFactors = F))
+data <- data.table(fread("eredmyn_to_clean.csv", stringsAsFactors = F))
 
-adat<- adat[,-c(1, 15, 16)]
-names(adat)
+data<- data[,-c(1, 15, 16)]
+names(data)
+adat<- data[,16:21]
+
+adat$kiiras_osszeg_help <- unlist(sapply(adat$kiiras_osszeg, function(x){as.numeric(x)+1}))
+
+
+
+k <- adat[is.na(kiiras_osszeg_help)]
+unique(as.character(k$kiiras_osszeg))
 
 #####
 
